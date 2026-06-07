@@ -298,12 +298,12 @@
   <!-- API KEY SCREEN -->
   <div id="api-screen" class="modal">
     <div class="modal-title">⬡ REALLIFE ENGINE</div>
-    <div class="modal-sub">A text-driven life simulator. Every choice has a price.<br><br>
-      <a href="https://openrouter.ai/keys" target="_blank" style="color:var(--accent);font-size:12px;font-family:var(--mono);">→ Get a free key at openrouter.ai</a>
+    <div class="modal-sub">A text-driven life simulator. Powered by Google Gemini 2.5 Flash Lite.<br><br>
+      <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent);font-size:12px;font-family:var(--mono);">→ Get a free Gemini API key</a>
     </div>
     <div class="form-row">
-      <label class="form-label">OpenRouter API Key</label>
-      <input type="password" id="api-key-input" placeholder="sk-or-v1-..." autocomplete="off">
+      <label class="form-label">Google Gemini API Key</label>
+      <input type="password" id="api-key-input" placeholder="Your Gemini API key" autocomplete="off">
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button class="btn btn-primary" onclick="submitAPIKey()">INITIALIZE →</button>
@@ -483,7 +483,8 @@
 </div>
 
 <script>
-const MODEL = 'google/gemma-4-31b-it:free';
+const GEMINI_MODEL = 'gemini-2.5-flash-lite';
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=';
 const SAVE_KEY_PREFIX = 'rle_save_';
 const MAX_SAVES = 5;
 let apiKey = '';
@@ -628,7 +629,6 @@ function loadGame(slot) {
   gameState = saved.state;
   actionLog = saved.log || [];
   currentSlot = slot;
-  // Ensure chatHistory exists
   if (!gameState.chatHistory) gameState.chatHistory = [];
   document.getElementById('modal-overlay').classList.add('hidden');
   document.getElementById('game-header').classList.remove('hidden');
@@ -636,7 +636,6 @@ function loadGame(slot) {
   document.getElementById('chat-log').innerHTML = '';
   renderAll();
   renderActionLog();
-  // Replay chat history visually
   gameState.chatHistory.forEach(msg => {
     if (msg.type === 'player') appendPlayerMessage(msg.text);
     else if (msg.type === 'ai') appendAIMessage(msg.title, msg.text, msg.odds, msg.changes, msg.isYear);
@@ -651,9 +650,9 @@ function loadGame(slot) {
 // ── API KEY ──
 function submitAPIKey() {
   const val = document.getElementById('api-key-input').value.trim();
-  if (!val || !val.startsWith('sk-')) {
+  if (!val) {
     const el = document.getElementById('api-error');
-    el.textContent = 'Key must start with "sk-". Check openrouter.ai for your key.';
+    el.textContent = 'Please enter a valid Gemini API key.';
     el.style.display = 'block';
     return;
   }
@@ -662,9 +661,9 @@ function submitAPIKey() {
   showSavesScreen();
 }
 function openSettings() {
-  const key = prompt('Update API Key (leave blank to keep current):');
-  if (key && key.startsWith('sk-')) {
-    apiKey = key;
+  const key = prompt('Update Gemini API Key (leave blank to keep current):');
+  if (key && key.trim()) {
+    apiKey = key.trim();
     try { localStorage.setItem('rle_api_key', key); } catch(e) {}
     appendSystem('API key updated.');
   }
@@ -796,7 +795,6 @@ function appendAIMessage(eventTitle, narrative, odds, statChanges, isYear) {
     </div>`;
   log.appendChild(div);
   log.scrollTop = log.scrollHeight;
-  // Store in history
   if (gameState) gameState.chatHistory.push({ type: 'ai', title: eventTitle, text: narrative, odds, changes: statChanges, isYear: !!isYear });
 }
 function appendPlayerMessage(text) {
@@ -837,6 +835,28 @@ function showTyping(color) {
   log.scrollTop = log.scrollHeight;
 }
 function hideTyping() { if (typingEl) { typingEl.remove(); typingEl = null; } }
+
+// ── GEMINI HELPERS ──
+async function callGemini(systemPrompt, userContent) {
+    const fullPrompt = systemPrompt + "\n\n" + userContent;
+    const requestBody = {
+        contents: [{ parts: [{ text: fullPrompt }] }],
+        generationConfig: { temperature: 0.8, maxOutputTokens: 700 }
+    };
+    const response = await fetch(GEMINI_URL + apiKey, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody)
+    });
+    if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Gemini API Error ${response.status}: ${errText}`);
+    }
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    if (!text) throw new Error('Empty response from Gemini');
+    return text;
+}
 
 // ── ADVANCE YEAR ──
 async function advanceYear() {
@@ -887,14 +907,7 @@ Turns played this age: ${s.turn}
 Summarize this year of their life and apply realistic year-over-year stat changes. Be dramatic but grounded.`;
 
   try {
-    const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-      body: JSON.stringify({ model: MODEL, max_tokens: 700, messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userContent }] })
-    });
-    if (!resp.ok) { const err = await resp.json().catch(()=>({})); throw new Error(err.error?.message || `HTTP ${resp.status}`); }
-    const data = await resp.json();
-    const raw = data.choices?.[0]?.message?.content || '';
+    const raw = await callGemini(systemPrompt, userContent);
     const parsed = extractJSON(raw);
     if (!parsed) throw new Error('Malformed AI response.');
     applyYearChange(newAge, parsed);
@@ -957,7 +970,6 @@ function sendAction() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Load saved API key
   try {
     const saved = localStorage.getItem('rle_api_key');
     if (saved) {
@@ -1024,14 +1036,7 @@ Assets: ${s.assets.join(', ') || 'None'}
 ACTION: ${action}`;
 
   try {
-    const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-      body: JSON.stringify({ model: MODEL, max_tokens: 700, messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userContent }] })
-    });
-    if (!resp.ok) { const err = await resp.json().catch(()=>({})); throw new Error(err.error?.message || `HTTP ${resp.status}`); }
-    const data = await resp.json();
-    const raw = data.choices?.[0]?.message?.content || '';
+    const raw = await callGemini(systemPrompt, userContent);
     const parsed = extractJSON(raw);
     if (!parsed) throw new Error('Malformed AI response. Try again.');
     applyTurn(action, parsed);
