@@ -143,6 +143,10 @@
   .stat-box-value.danger { color: var(--danger); }
   .stat-box-value.warn { color: var(--warn); }
   .stat-box-value.success { color: var(--success); }
+  /* Job box spans full width */
+  .stat-box.full-width { grid-column: 1 / -1; }
+  .stat-box-value.job-val { font-size: 12px; line-height: 1.3; color: var(--accent3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
   .bar-row { margin-bottom: 8px; }
   .bar-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
   .bar-row-label { font-family: var(--mono); font-size: 10px; color: var(--text2); }
@@ -155,17 +159,14 @@
   /* AGE ADVANCE BUTTON */
   #age-advance-btn {
     width: 100%; padding: 10px; margin-top: 4px;
-    background: rgba(0,229,192,0.07);
-    border: 0.5px solid rgba(0,229,192,0.22);
-    border-radius: var(--radius);
-    cursor: pointer; color: var(--accent3);
+    background: rgba(0,229,192,0.07); border: 0.5px solid rgba(0,229,192,0.22);
+    border-radius: var(--radius); cursor: pointer; color: var(--accent3);
     font-family: var(--head); font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
     transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
   }
   #age-advance-btn:hover { background: rgba(0,229,192,0.15); transform: translateY(-1px); }
   #age-advance-btn:active { transform: translateY(0); }
   #age-advance-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-  .age-btn-icon { font-size: 16px; }
 
   /* TERMINAL */
   #panel-terminal { display: flex; flex-direction: column; background: var(--bg); overflow: hidden; }
@@ -192,22 +193,20 @@
   }
   .chat-bubble.year-bubble { border-color: rgba(0,229,192,0.25); background: rgba(0,229,192,0.04); }
   .chat-msg.player .chat-bubble { background: rgba(155,89,255,0.08); border-color: rgba(155,89,255,0.2); color: #c4aeff; }
-  .chat-bubble-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .chat-bubble-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
   .event-title { font-family: var(--head); font-size: 13px; font-weight: 700; letter-spacing: 0.05em; color: var(--accent); }
   .event-title.year-title { color: var(--accent3); }
   .odds-badge { font-family: var(--mono); font-size: 10px; padding: 2px 7px; border-radius: 3px; letter-spacing: 0.06em; }
   .narrative-text { font-size: 13px; line-height: 1.7; color: var(--text2); }
   .stat-changes { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
   .year-divider {
-    text-align: center; padding: 6px 0;
-    font-family: var(--mono); font-size: 10px; color: var(--accent3);
-    letter-spacing: 0.2em; opacity: 0.6;
+    text-align: center; padding: 6px 0; font-family: var(--mono); font-size: 10px;
+    color: var(--accent3); letter-spacing: 0.2em; opacity: 0.6;
   }
   .typing-indicator {
     display: flex; align-items: center; gap: 6px; padding: 8px 14px;
     background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: 10px; width: fit-content;
-    font-family: var(--mono); font-size: 12px; color: var(--text3);
+    border-radius: 10px; width: fit-content; font-family: var(--mono); font-size: 12px; color: var(--text3);
   }
   .typing-dots { display: flex; gap: 3px; }
   .typing-dots span { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; animation: typingPulse 1.2s ease infinite; }
@@ -223,7 +222,7 @@
     height: 44px; min-width: 80px; font-family: var(--mono); font-size: 12px;
     letter-spacing: 0.1em; padding: 0 16px; background: var(--accent); color: #fff;
     border: none; border-radius: var(--radius); cursor: pointer; transition: all 0.15s;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
+    display: flex; align-items: center; justify-content: center;
   }
   #send-btn:hover { background: #6ba0ff; transform: translateY(-1px); }
   #send-btn:active { transform: translateY(0); }
@@ -284,7 +283,7 @@
   /* RESPONSIVE */
   @media (max-width: 900px) {
     #game-layout { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; height: auto; }
-    #panel-status { border-right: none; border-bottom: 0.5px solid var(--border); max-height: 220px; }
+    #panel-status { border-right: none; border-bottom: 0.5px solid var(--border); max-height: 260px; }
     #panel-right { border-left: none; border-top: 0.5px solid var(--border); max-height: 180px; }
     #panel-terminal { height: 60vh; }
   }
@@ -298,12 +297,12 @@
   <!-- API KEY SCREEN -->
   <div id="api-screen" class="modal">
     <div class="modal-title">⬡ REALLIFE ENGINE</div>
-    <div class="modal-sub">A text-driven life simulator. Powered by Google Gemini 3.1 Flash Lite.<br><br>
-      <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent);font-size:12px;font-family:var(--mono);">→ Get a free Gemini API key</a>
+    <div class="modal-sub">A text-driven life simulator. Powered by Gemini 3.1 Flash Lite.<br><br>
+      <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent);font-size:12px;font-family:var(--mono);">→ Get a free Gemini API key at aistudio.google.com</a>
     </div>
     <div class="form-row">
-      <label class="form-label">Google Gemini API Key</label>
-      <input type="password" id="api-key-input" placeholder="Your Gemini API key" autocomplete="off">
+      <label class="form-label">Google AI Studio API Key</label>
+      <input type="password" id="api-key-input" placeholder="AIza..." autocomplete="off">
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button class="btn btn-primary" onclick="submitAPIKey()">INITIALIZE →</button>
@@ -398,9 +397,9 @@
   <div class="header-meta">
     <span class="tag tag-blue" id="hdr-location">—</span>
     <span class="label" id="hdr-turn">TURN 0</span>
-    <button class="btn btn-teal btn-sm" onclick="goToSaves()" title="All Lives">⊞ LIVES</button>
-    <button class="btn btn-ghost btn-sm" onclick="saveCurrentGame()" title="Save">💾 SAVE</button>
-    <button class="btn btn-ghost btn-sm" onclick="openSettings()" title="Settings">⚙</button>
+    <button class="btn btn-teal btn-sm" onclick="goToSaves()">⊞ LIVES</button>
+    <button class="btn btn-ghost btn-sm" onclick="saveCurrentGame()">💾 SAVE</button>
+    <button class="btn btn-ghost btn-sm" onclick="openSettings()">⚙</button>
   </div>
 </div>
 
@@ -417,13 +416,17 @@
         <div class="stat-box"><div class="stat-box-label">CASH</div><div class="stat-box-value success" id="st-cash">$500</div></div>
         <div class="stat-box"><div class="stat-box-label">LOOKS</div><div class="stat-box-value" id="st-looks">50</div></div>
         <div class="stat-box"><div class="stat-box-label">SYNDICATE</div><div class="stat-box-value" id="st-rank">Civilian</div></div>
+        <!-- JOB BOX — spans full width -->
+        <div class="stat-box full-width">
+          <div class="stat-box-label">JOB</div>
+          <div class="stat-box-value job-val" id="st-job">Unemployed</div>
+        </div>
       </div>
     </div>
 
     <!-- ADVANCE YEAR BUTTON -->
     <button id="age-advance-btn" onclick="advanceYear()" title="Skip to next year of your life">
-      <span class="age-btn-icon">⏩</span>
-      <span>ADVANCE YEAR</span>
+      <span>⏩</span><span>ADVANCE YEAR</span>
     </button>
 
     <div>
@@ -483,17 +486,19 @@
 </div>
 
 <script>
+// ── CONFIG ──
 const GEMINI_MODEL = 'gemini-3.1-flash-lite';
 const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=';
 const SAVE_KEY_PREFIX = 'rle_save_';
 const MAX_SAVES = 5;
+
 let apiKey = '';
 let gameState = null;
 let actionLog = [];
 let isProcessing = false;
 let currentSlot = null;
 
-// ── STATE ──
+// ── INITIAL STATE ──
 function createInitialState(char) {
   const bonusMap = { charm: { Charm: 15 }, street: { 'Street IQ': 15 }, hustle: { Hustle: 15 }, combat: { Combat: 15 } };
   const bonus = bonusMap[char.bonus] || {};
@@ -506,15 +511,24 @@ function createInitialState(char) {
     cash: 500, debt: 0, assets: [],
     looks: parseInt(char.looks),
     syndicateRank: 'Civilian',
+    // CHANGE 2: job field added to state
+    job: 'Unemployed',
     health: 100, sanity: 100, heat: 0, rep: 10, turn: 0,
     skills: {
-      Charm: 10 + (bonus.Charm || 0),
-      'Street IQ': 10 + (bonus['Street IQ'] || 0),
-      Hustle: 10 + (bonus.Hustle || 0),
-      Combat: 10 + (bonus.Combat || 0),
-      Connections: 5
+      Charm:        10 + (bonus.Charm        || 0),
+      'Street IQ':  10 + (bonus['Street IQ'] || 0),
+      Hustle:       10 + (bonus.Hustle       || 0),
+      Combat:       10 + (bonus.Combat       || 0),
+      Connections:  5
     },
-    relationships: { Mom: 70, 'Best Friend': 60, Syndicate: 10, Girlfriend: 0, Boss: 40 },
+    // CHANGE 3: relationships now stored as objects {label, value} so labels are dynamic
+    relationships: {
+      Mom:          { label: 'Mom',         value: 70 },
+      'Best Friend':{ label: 'Best Friend', value: 60 },
+      Syndicate:    { label: 'Syndicate',   value: 10 },
+      Partner:      { label: 'Partner',     value: 0  },
+      Boss:         { label: 'Boss',        value: 40 }
+    },
     chatHistory: []
   };
 }
@@ -532,8 +546,7 @@ function getSaveSlots() {
 }
 function saveToSlot(slot, state, log) {
   try {
-    const payload = { state, log, savedAt: Date.now() };
-    localStorage.setItem(SAVE_KEY_PREFIX + slot, JSON.stringify(payload));
+    localStorage.setItem(SAVE_KEY_PREFIX + slot, JSON.stringify({ state, log, savedAt: Date.now() }));
     return true;
   } catch(e) { return false; }
 }
@@ -543,44 +556,32 @@ function loadFromSlot(slot) {
     return raw ? JSON.parse(raw) : null;
   } catch(e) { return null; }
 }
-function deleteSlot(slot) {
-  try { localStorage.removeItem(SAVE_KEY_PREFIX + slot); } catch(e) {}
-}
+function deleteSlot(slot) { try { localStorage.removeItem(SAVE_KEY_PREFIX + slot); } catch(e) {} }
 function saveCurrentGame() {
   if (!gameState) return;
-  if (currentSlot) {
-    saveToSlot(currentSlot, gameState, actionLog);
-    appendSystem('Game saved to slot ' + currentSlot + '.');
-  } else {
+  if (!currentSlot) {
     const slots = getSaveSlots();
     const empty = slots.find(s => !s.data);
-    const slot = empty ? empty.slot : 1;
-    currentSlot = slot;
-    saveToSlot(slot, gameState, actionLog);
-    appendSystem('Game saved to new slot ' + slot + '.');
+    currentSlot = empty ? empty.slot : 1;
   }
+  saveToSlot(currentSlot, gameState, actionLog);
+  appendSystem('Game saved to slot ' + currentSlot + '.');
 }
 
 // ── SCREEN ROUTING ──
 function showAPIScreen() {
+  ['saves-screen','setup-screen','gameover-screen'].forEach(id => document.getElementById(id).classList.add('hidden'));
   document.getElementById('api-screen').classList.remove('hidden');
-  document.getElementById('saves-screen').classList.add('hidden');
-  document.getElementById('setup-screen').classList.add('hidden');
-  document.getElementById('gameover-screen').classList.add('hidden');
 }
 function showSavesScreen() {
   renderSaveSlots();
-  document.getElementById('api-screen').classList.add('hidden');
+  ['api-screen','setup-screen','gameover-screen'].forEach(id => document.getElementById(id).classList.add('hidden'));
   document.getElementById('saves-screen').classList.remove('hidden');
-  document.getElementById('setup-screen').classList.add('hidden');
-  document.getElementById('gameover-screen').classList.add('hidden');
   document.getElementById('modal-overlay').classList.remove('hidden');
 }
 function showSetupScreen() {
-  document.getElementById('api-screen').classList.add('hidden');
-  document.getElementById('saves-screen').classList.add('hidden');
+  ['api-screen','saves-screen','gameover-screen'].forEach(id => document.getElementById(id).classList.add('hidden'));
   document.getElementById('setup-screen').classList.remove('hidden');
-  document.getElementById('gameover-screen').classList.add('hidden');
 }
 function goToSaves() {
   if (gameState) saveCurrentGame();
@@ -592,16 +593,8 @@ function goToSaves() {
 
 function renderSaveSlots() {
   const slots = getSaveSlots();
-  const container = document.getElementById('save-slots-list');
-  container.innerHTML = slots.map(({ slot, data }) => {
-    if (!data) {
-      return `<div class="save-slot empty">
-        <div class="save-info">
-          <div class="save-name" style="color:var(--text3)">Empty Slot ${slot}</div>
-          <div class="save-meta">—</div>
-        </div>
-      </div>`;
-    }
+  document.getElementById('save-slots-list').innerHTML = slots.map(({ slot, data }) => {
+    if (!data) return `<div class="save-slot empty"><div class="save-info"><div class="save-name" style="color:var(--text3)">Empty Slot ${slot}</div><div class="save-meta">—</div></div></div>`;
     const s = data.state;
     const d = new Date(data.savedAt);
     const dateStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -618,10 +611,7 @@ function renderSaveSlots() {
   }).join('');
 }
 function confirmDelete(slot) {
-  if (confirm('Delete this save? This cannot be undone.')) {
-    deleteSlot(slot);
-    renderSaveSlots();
-  }
+  if (confirm('Delete this save? This cannot be undone.')) { deleteSlot(slot); renderSaveSlots(); }
 }
 function loadGame(slot) {
   const saved = loadFromSlot(slot);
@@ -630,6 +620,10 @@ function loadGame(slot) {
   actionLog = saved.log || [];
   currentSlot = slot;
   if (!gameState.chatHistory) gameState.chatHistory = [];
+  // Migrate old flat relationship format to new object format if needed
+  migrateRelationships();
+  // Ensure job field exists on old saves
+  if (!gameState.job) gameState.job = 'Unemployed';
   document.getElementById('modal-overlay').classList.add('hidden');
   document.getElementById('game-header').classList.remove('hidden');
   document.getElementById('game-layout').classList.remove('hidden');
@@ -637,14 +631,29 @@ function loadGame(slot) {
   renderAll();
   renderActionLog();
   gameState.chatHistory.forEach(msg => {
-    if (msg.type === 'player') appendPlayerMessage(msg.text);
-    else if (msg.type === 'ai') appendAIMessage(msg.title, msg.text, msg.odds, msg.changes, msg.isYear);
-    else if (msg.type === 'system') appendSystem(msg.text);
-    else if (msg.type === 'divider') appendYearDivider(msg.text);
+    if (msg.type === 'player') appendPlayerMessage(msg.text, true);
+    else if (msg.type === 'ai') appendAIMessage(msg.title, msg.text, msg.odds, msg.changes, msg.isYear, true);
+    else if (msg.type === 'system') appendSystem(msg.text, true);
+    else if (msg.type === 'divider') appendYearDivider(msg.text, true);
   });
   document.getElementById('action-input').disabled = false;
   document.getElementById('send-btn').disabled = false;
   document.getElementById('action-input').focus();
+}
+
+// Migrate old {key: number} relationship format to new {key: {label, value}} format
+function migrateRelationships() {
+  const rels = gameState.relationships;
+  const needsMigration = Object.values(rels).some(v => typeof v === 'number');
+  if (!needsMigration) return;
+  const labelMap = { Mom: 'Mom', 'Best Friend': 'Best Friend', Syndicate: 'Syndicate', Girlfriend: 'Partner', Partner: 'Partner', Boss: 'Boss' };
+  const migrated = {};
+  for (const [key, val] of Object.entries(rels)) {
+    const label = labelMap[key] || key;
+    const newKey = key === 'Girlfriend' ? 'Partner' : key;
+    migrated[newKey] = { label: label === 'Girlfriend' ? 'Partner' : label, value: typeof val === 'number' ? val : val.value };
+  }
+  gameState.relationships = migrated;
 }
 
 // ── API KEY ──
@@ -652,7 +661,7 @@ function submitAPIKey() {
   const val = document.getElementById('api-key-input').value.trim();
   if (!val) {
     const el = document.getElementById('api-error');
-    el.textContent = 'Please enter a valid Gemini API key.';
+    el.textContent = 'Please enter a valid Google AI Studio API key.';
     el.style.display = 'block';
     return;
   }
@@ -664,7 +673,7 @@ function openSettings() {
   const key = prompt('Update Gemini API Key (leave blank to keep current):');
   if (key && key.trim()) {
     apiKey = key.trim();
-    try { localStorage.setItem('rle_api_key', key); } catch(e) {}
+    try { localStorage.setItem('rle_api_key', key.trim()); } catch(e) {}
     appendSystem('API key updated.');
   }
 }
@@ -713,34 +722,55 @@ function renderAll() {
   document.getElementById('st-cash').className = 'stat-box-value ' + (s.cash >= 0 ? 'success' : 'danger');
   document.getElementById('st-looks').textContent = s.looks;
   document.getElementById('st-rank').textContent = s.syndicateRank;
+  document.getElementById('st-job').textContent = s.job || 'Unemployed';
   document.getElementById('hdr-location').textContent = s.location;
   document.getElementById('hdr-turn').textContent = 'TURN ' + s.turn;
+
   function setBar(id, barId, val) {
-    const pct = Math.min(100, Math.max(0, val));
     document.getElementById(id).textContent = Math.round(val);
-    document.getElementById(barId).style.width = pct + '%';
+    document.getElementById(barId).style.width = Math.min(100, Math.max(0, val)) + '%';
   }
   setBar('v-health','bar-health', s.health);
   setBar('v-sanity','bar-sanity', s.sanity);
   setBar('v-heat','bar-heat', s.heat);
   setBar('v-rep','bar-rep', s.rep);
   const hb = document.getElementById('bar-health');
-  if (s.health < 20) hb.className = 'bar-fill bar-red';
-  else if (s.health < 50) hb.className = 'bar-fill bar-yellow';
-  else hb.className = 'bar-fill bar-green';
+  hb.className = s.health < 20 ? 'bar-fill bar-red' : s.health < 50 ? 'bar-fill bar-yellow' : 'bar-fill bar-green';
+
   document.getElementById('skills-list').innerHTML = Object.entries(s.skills).map(([k,v]) =>
     `<div class="skill-row"><span class="skill-name">${k}</span><span class="skill-val">${v}</span></div>`).join('');
   document.getElementById('assets-list').textContent = s.assets.length ? s.assets.join(' · ') : 'None';
+
+  // CHANGE 3: render dynamic relationship labels
   const relColors = ['bar-green','bar-blue','bar-red','bar-purple','bar-yellow'];
-  document.getElementById('rels-list').innerHTML = Object.entries(s.relationships).map(([k,v],i) => {
+  document.getElementById('rels-list').innerHTML = Object.entries(s.relationships).map(([key, rel], i) => {
+    const v = rel.value;
+    const displayLabel = rel.label;
+    // Hide partner slot entirely if value is 0 and label is default "Partner" (no one in life)
+    if (key === 'Partner' && v === 0 && rel.label === 'Partner') {
+      return `<div class="rel-item" style="opacity:0.35">
+        <div class="rel-name"><span class="rel-label" style="color:var(--text3)">Partner</span><span class="rel-val">—</span></div>
+        <span class="rel-tag">NONE</span>
+        <div class="bar-wrap"><div class="bar-fill ${relColors[i%relColors.length]}" style="width:0%"></div></div>
+      </div>`;
+    }
+    // Hide Boss if unemployed
+    if (key === 'Boss' && (s.job === 'Unemployed' || !s.job)) {
+      return `<div class="rel-item" style="opacity:0.35">
+        <div class="rel-name"><span class="rel-label" style="color:var(--text3)">Boss</span><span class="rel-val">—</span></div>
+        <span class="rel-tag">NO JOB</span>
+        <div class="bar-wrap"><div class="bar-fill ${relColors[i%relColors.length]}" style="width:0%"></div></div>
+      </div>`;
+    }
     const mood = v >= 70 ? 'CLOSE' : v >= 40 ? 'NEUTRAL' : v >= 20 ? 'TENSE' : 'HOSTILE';
     return `<div class="rel-item">
-      <div class="rel-name"><span class="rel-label">${k}</span><span class="rel-val">${v}%</span></div>
+      <div class="rel-name"><span class="rel-label">${displayLabel}</span><span class="rel-val">${v}%</span></div>
       <span class="rel-tag">${mood}</span>
       <div class="bar-wrap"><div class="bar-fill ${relColors[i%relColors.length]}" style="width:${v}%"></div></div>
     </div>`;
   }).join('');
 }
+
 function renderActionLog() {
   document.getElementById('action-log').innerHTML = actionLog.slice(-10).reverse().map(item => `
     <div class="log-item">
@@ -760,7 +790,7 @@ function addOpeningMessage() {
   appendAIMessage('SYSTEM BOOT', text, null, null, false);
 }
 
-function appendAIMessage(eventTitle, narrative, odds, statChanges, isYear) {
+function appendAIMessage(eventTitle, narrative, odds, statChanges, isYear, replay) {
   const log = document.getElementById('chat-log');
   const div = document.createElement('div');
   div.className = 'chat-msg ai';
@@ -775,53 +805,48 @@ function appendAIMessage(eventTitle, narrative, odds, statChanges, isYear) {
     changesHtml = '<div class="stat-changes">' + Object.entries(statChanges).map(([k,v]) => {
       if (v === 0) return '';
       const cls = v > 0 ? 'tag-green' : 'tag-red';
-      const sign = v > 0 ? '+' : '';
-      return `<span class="tag ${cls}">${k} ${sign}${v}</span>`;
+      return `<span class="tag ${cls}">${k} ${v > 0 ? '+' : ''}${v}</span>`;
     }).join('') + '</div>';
   }
   const titleClass = isYear ? 'event-title year-title' : 'event-title';
   const bubbleClass = isYear ? 'chat-bubble year-bubble' : 'chat-bubble';
   const avatarClass = isYear ? 'chat-avatar avatar-year' : 'chat-avatar avatar-ai';
-  const avatarLabel = isYear ? 'YR' : 'GM';
   div.innerHTML = `
-    <div class="${avatarClass}">${avatarLabel}</div>
+    <div class="${avatarClass}">${isYear ? 'YR' : 'GM'}</div>
     <div class="${bubbleClass}">
-      <div class="chat-bubble-header">
-        <span class="${titleClass}">${eventTitle}</span>
-        ${badgeHtml}
-      </div>
+      <div class="chat-bubble-header"><span class="${titleClass}">${eventTitle}</span>${badgeHtml}</div>
       <div class="narrative-text">${narrative.replace(/\n/g,'<br>')}</div>
       ${changesHtml}
     </div>`;
   log.appendChild(div);
   log.scrollTop = log.scrollHeight;
-  if (gameState) gameState.chatHistory.push({ type: 'ai', title: eventTitle, text: narrative, odds, changes: statChanges, isYear: !!isYear });
+  if (!replay && gameState) gameState.chatHistory.push({ type: 'ai', title: eventTitle, text: narrative, odds, changes: statChanges, isYear: !!isYear });
 }
-function appendPlayerMessage(text) {
+function appendPlayerMessage(text, replay) {
   const log = document.getElementById('chat-log');
   const div = document.createElement('div');
   div.className = 'chat-msg player';
   div.innerHTML = `<div class="chat-avatar avatar-player">YOU</div><div class="chat-bubble">${text}</div>`;
   log.appendChild(div);
   log.scrollTop = log.scrollHeight;
-  if (gameState) gameState.chatHistory.push({ type: 'player', text });
+  if (!replay && gameState) gameState.chatHistory.push({ type: 'player', text });
 }
-function appendSystem(text) {
+function appendSystem(text, replay) {
   const log = document.getElementById('chat-log');
   const div = document.createElement('div');
   div.innerHTML = `<div style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--text3);padding:4px 0;">[SYSTEM] ${text}</div>`;
   log.appendChild(div);
   log.scrollTop = log.scrollHeight;
-  if (gameState) gameState.chatHistory.push({ type: 'system', text });
+  if (!replay && gameState) gameState.chatHistory.push({ type: 'system', text });
 }
-function appendYearDivider(text) {
+function appendYearDivider(text, replay) {
   const log = document.getElementById('chat-log');
   const div = document.createElement('div');
   div.className = 'year-divider';
   div.textContent = text;
   log.appendChild(div);
   log.scrollTop = log.scrollHeight;
-  if (gameState) gameState.chatHistory.push({ type: 'divider', text });
+  if (!replay && gameState) gameState.chatHistory.push({ type: 'divider', text });
 }
 
 let typingEl = null;
@@ -829,97 +854,103 @@ function showTyping(color) {
   const log = document.getElementById('chat-log');
   typingEl = document.createElement('div');
   typingEl.className = 'chat-msg ai';
-  const dotColor = color || 'var(--accent)';
-  typingEl.innerHTML = `<div class="chat-avatar avatar-ai" style="color:${dotColor}">GM</div><div class="typing-indicator"><span style="font-size:11px;color:var(--text3)">Processing</span><div class="typing-dots"><span style="background:${dotColor}"></span><span style="background:${dotColor}"></span><span style="background:${dotColor}"></span></div></div>`;
+  const c = color || 'var(--accent)';
+  typingEl.innerHTML = `<div class="chat-avatar avatar-ai" style="color:${c}">GM</div><div class="typing-indicator"><span style="font-size:11px;color:var(--text3)">Processing</span><div class="typing-dots"><span style="background:${c}"></span><span style="background:${c}"></span><span style="background:${c}"></span></div></div>`;
   log.appendChild(typingEl);
   log.scrollTop = log.scrollHeight;
 }
 function hideTyping() { if (typingEl) { typingEl.remove(); typingEl = null; } }
 
-// ── GEMINI HELPERS ──
-async function callGemini(systemPrompt, userContent) {
-    const fullPrompt = systemPrompt + "\n\n" + userContent;
-    const requestBody = {
-        contents: [{ parts: [{ text: fullPrompt }] }],
-        generationConfig: { temperature: 0.8, maxOutputTokens: 700 }
-    };
-    const response = await fetch(GEMINI_URL + apiKey, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody)
-    });
-    if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`Gemini API Error ${response.status}: ${errText}`);
-    }
-    const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    if (!text) throw new Error('Empty response from Gemini');
-    return text;
+// ── GEMINI API ──
+async function callGemini(prompt) {
+  const resp = await fetch(GEMINI_URL + apiKey, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.85, maxOutputTokens: 700 }
+    })
+  });
+  if (!resp.ok) {
+    const errText = await resp.text();
+    throw new Error(`Gemini ${resp.status}: ${errText.substring(0, 120)}`);
+  }
+  const data = await resp.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  if (!text) throw new Error('Empty response from Gemini.');
+  return text;
+}
+
+function extractJSON(text) {
+  try {
+    const match = text.match(/\{[\s\S]*\}/);
+    return match ? JSON.parse(match[0]) : null;
+  } catch(e) { return null; }
 }
 
 // ── ADVANCE YEAR ──
 async function advanceYear() {
   if (isProcessing) return;
   isProcessing = true;
-  const btn = document.getElementById('age-advance-btn');
-  btn.disabled = true;
-  document.getElementById('send-btn').disabled = true;
-  document.getElementById('action-input').disabled = true;
-
+  setAllInputs(true);
   const s = gameState;
   const oldAge = s.age;
   const newAge = oldAge + 1;
-
   appendYearDivider(`━━━━━━  YEAR ${oldAge} → ${newAge}  ━━━━━━`);
   showTyping('var(--accent3)');
 
-  const systemPrompt = `You are the Game Master for RealLife Engine. The player has chosen to advance one year in their life.
+  // Serialize relationships for the prompt
+  const relsForPrompt = Object.fromEntries(
+    Object.entries(s.relationships).map(([k, r]) => [r.label, r.value])
+  );
 
-Respond ONLY with a valid JSON object (no markdown, no code blocks, no preamble):
+  const prompt = `You are the Game Master for RealLife Engine. Player advances one year.
+Respond ONLY with valid JSON, no markdown or preamble.
+
 {
-  "event_title": <4-6 word title like "Year 24 — A New Dawn">,
-  "narrative": <3-5 sentences. Summarize what changed over this year based on the character's current state, relationships, and history. Reference their specific stats, location, and situation. Be vivid and specific — mention actual NPC names, actual skills. Explain WHY stats are changing.>,
+  "event_title": "<4-6 word title e.g. 'Year 24 — A New Dawn'>",
+  "narrative": "<3-5 sentences: summarize the year, reference the character's actual situation, NPC names, skills, explain WHY stats change>",
   "stat_changes": {
-    "cash": <integer — yearly income/expense net, realistic based on situation>,
-    "health": <integer — aging, lifestyle effects, -5 to +5>,
-    "sanity": <integer — mental toll or recovery, -5 to +5>,
-    "heat": <integer — heat naturally decays -5 to -20 if not committing crimes, can rise if syndicate>,
-    "rep": <integer — reputation drift>,
-    "looks": <integer — aging: usually -1 or 0, rarely +1>,
-    "skills": { "<skill_name>": <integer, 1-3 per skill naturally grown> },
-    "relationships": { "<npc_name>": <integer — relationships drift naturally, -10 to +10> },
+    "cash": <integer, net yearly income/expenses>,
+    "health": <integer -5 to +3, lifestyle/age effects>,
+    "sanity": <integer -5 to +5, mental toll or recovery>,
+    "heat": <integer, MUST be 0 or negative during year transitions unless character is actively in a crime gang; heat fades naturally with time>,
+    "rep": <integer -5 to +5>,
+    "looks": <integer, usually -1 or 0, rarely +1>,
+    "job": "<string: current job title and employer, or 'Unemployed' if none>",
+    "skills": { "<skill>": <1-3 natural growth> },
+    "relationships": {
+      "<key matching existing relationship keys exactly>": {
+        "label": "<display label — e.g. 'Wife' instead of 'Girlfriend' if married, 'Ex' if broken up, 'Estranged' if drifted, omit Boss if unemployed by setting value to 0>",
+        "value_delta": <integer change -10 to +10>
+      }
+    },
     "assets_add": [],
     "assets_remove": [],
     "syndicate_rank": null
   }
-}`;
+}
 
-  const userContent = `CHARACTER AT AGE ${oldAge} (advancing to ${newAge}):
-Name: ${s.name} | Gender: ${s.gender} | Background: ${s.background}
-Location: ${s.location} | Syndicate: ${s.syndicateRank}
+CHARACTER (age ${oldAge} → ${newAge}):
+Name: ${s.name} | Gender: ${s.gender} | Background: ${s.background} | Location: ${s.location}
+Job: ${s.job} | Syndicate: ${s.syndicateRank}
 Cash: $${s.cash} | Health: ${s.health} | Sanity: ${s.sanity} | Heat: ${s.heat}% | Rep: ${s.rep} | Looks: ${s.looks}
 Skills: ${JSON.stringify(s.skills)}
-Relationships: ${JSON.stringify(s.relationships)}
+Relationships: ${JSON.stringify(relsForPrompt)}
 Assets: ${s.assets.join(', ') || 'None'}
-Turns played this age: ${s.turn}
-
-Summarize this year of their life and apply realistic year-over-year stat changes. Be dramatic but grounded.`;
+Turns this year: ${s.turn}`;
 
   try {
-    const raw = await callGemini(systemPrompt, userContent);
+    const raw = await callGemini(prompt);
     const parsed = extractJSON(raw);
-    if (!parsed) throw new Error('Malformed AI response.');
+    if (!parsed) throw new Error('Malformed JSON response.');
     applyYearChange(newAge, parsed);
   } catch(e) {
     hideTyping();
     appendSystem(`[YEAR ERROR] ${e.message}. Try again.`);
   } finally {
     isProcessing = false;
-    btn.disabled = false;
-    document.getElementById('send-btn').disabled = false;
-    document.getElementById('action-input').disabled = false;
-    document.getElementById('action-input').focus();
+    setAllInputs(false);
   }
 }
 
@@ -928,29 +959,40 @@ function applyYearChange(newAge, result) {
   const s = gameState;
   s.age = newAge;
   const sc = result.stat_changes || {};
-  if (sc.cash) s.cash = Math.max(-50000, s.cash + sc.cash);
-  if (sc.health) s.health = Math.min(100, Math.max(0, s.health + sc.health));
-  if (sc.sanity) s.sanity = Math.min(100, Math.max(0, s.sanity + sc.sanity));
-  if (sc.heat) s.heat = Math.min(100, Math.max(0, s.heat + sc.heat));
-  if (sc.rep) s.rep = Math.min(100, Math.max(0, s.rep + sc.rep));
-  if (sc.looks !== undefined) s.looks = Math.min(100, Math.max(0, s.looks + sc.looks));
+  if (sc.cash)   s.cash   = Math.max(-50000, s.cash + sc.cash);
+  if (sc.health) s.health = clamp(s.health + sc.health, 0, 100);
+  if (sc.sanity) s.sanity = clamp(s.sanity + sc.sanity, 0, 100);
+  // CHANGE 4: heat can only decrease (or stay) during year transitions
+  if (sc.heat)   s.heat   = clamp(s.heat + Math.min(0, sc.heat), 0, 100);
+  if (sc.rep)    s.rep    = clamp(s.rep + sc.rep, 0, 100);
+  if (sc.looks !== undefined) s.looks = clamp(s.looks + sc.looks, 0, 100);
+  // CHANGE 2: apply job update
+  if (sc.job) s.job = sc.job;
   if (sc.skills) Object.entries(sc.skills).forEach(([k,v]) => {
-    s.skills[k] = s.skills[k] !== undefined ? Math.min(50, Math.max(0, s.skills[k] + v)) : Math.max(0, v);
+    s.skills[k] = s.skills[k] !== undefined ? clamp(s.skills[k] + v, 0, 50) : Math.max(0, v);
   });
-  if (sc.relationships) Object.entries(sc.relationships).forEach(([k,v]) => {
-    if (s.relationships[k] !== undefined) s.relationships[k] = Math.min(100, Math.max(0, s.relationships[k] + v));
-  });
-  if (sc.assets_add) sc.assets_add.forEach(a => { if (!s.assets.includes(a)) s.assets.push(a); });
+  // CHANGE 3: apply dynamic relationship label + value changes
+  if (sc.relationships) {
+    Object.entries(sc.relationships).forEach(([key, change]) => {
+      if (s.relationships[key]) {
+        if (change.label) s.relationships[key].label = change.label;
+        if (change.value_delta !== undefined) {
+          s.relationships[key].value = clamp(s.relationships[key].value + change.value_delta, 0, 100);
+        }
+      }
+    });
+  }
+  if (sc.assets_add)    sc.assets_add.forEach(a => { if (!s.assets.includes(a)) s.assets.push(a); });
   if (sc.assets_remove) sc.assets_remove.forEach(a => { s.assets = s.assets.filter(x => x !== a); });
   if (sc.syndicate_rank) s.syndicateRank = sc.syndicate_rank;
 
   const displayChanges = {};
-  if (sc.cash) displayChanges['CASH'] = sc.cash;
+  if (sc.cash)   displayChanges['CASH']   = sc.cash;
   if (sc.health) displayChanges['HEALTH'] = sc.health;
   if (sc.sanity) displayChanges['SANITY'] = sc.sanity;
-  if (sc.heat) displayChanges['HEAT'] = sc.heat;
-  if (sc.rep) displayChanges['REP'] = sc.rep;
-  if (sc.looks) displayChanges['LOOKS'] = sc.looks;
+  if (sc.heat)   displayChanges['HEAT']   = sc.heat;
+  if (sc.rep)    displayChanges['REP']    = sc.rep;
+  if (sc.looks)  displayChanges['LOOKS']  = sc.looks;
 
   appendAIMessage(result.event_title || `Age ${newAge}`, result.narrative || '…', null, displayChanges, true);
   renderAll();
@@ -972,91 +1014,90 @@ function sendAction() {
 document.addEventListener('DOMContentLoaded', () => {
   try {
     const saved = localStorage.getItem('rle_api_key');
-    if (saved) {
-      apiKey = saved;
-      document.getElementById('api-key-input').value = saved;
-    }
+    if (saved) { apiKey = saved; document.getElementById('api-key-input').value = saved; }
   } catch(e) {}
-
   const input = document.getElementById('action-input');
   if (input) {
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !e.ctrlKey && !e.shiftKey) { e.preventDefault(); sendAction(); }
-    });
-    input.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-    });
+    input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.ctrlKey && !e.shiftKey) { e.preventDefault(); sendAction(); } });
+    input.addEventListener('input', function() { this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 120) + 'px'; });
   }
 });
 
 async function processAction(action) {
   isProcessing = true;
-  document.getElementById('send-btn').disabled = true;
-  document.getElementById('action-input').disabled = true;
-  document.getElementById('age-advance-btn').disabled = true;
+  setAllInputs(true);
   appendPlayerMessage(action);
   showTyping();
   const s = gameState;
 
-  const systemPrompt = `You are the Game Master for RealLife Engine, a gritty turn-based life simulator. Narrate outcomes in terse, cinematic style.
+  // Serialize relationships for prompt
+  const relsForPrompt = Object.fromEntries(
+    Object.entries(s.relationships).map(([k, r]) => [r.label, r.value])
+  );
 
-Respond ONLY with a valid JSON object (no markdown, no code blocks, no preamble):
+  // CHANGE 1: tighter system prompt — concrete instructions, no waffle
+  // CHANGE 4: heat/sanity rules embedded clearly
+  const prompt = `You are a Game Master for a gritty text life simulator. Respond ONLY with valid JSON, no markdown.
+
+Rules:
+- Heat ONLY rises when the player commits crimes, bribes officials, or does illegal acts. Peaceful or social actions never raise Heat. Vacations, rest, and legal activities always lower Heat by 5-15.
+- Sanity rises with rest, fun, social bonding. Sanity falls with violence, loss, isolation, or heavy drug use. Neutral actions don't change Sanity.
+- If an NPC sends a message (e.g. Boss texts you), write the EXACT message in the narrative in quotes, then one line of context. Keep it short.
+- Success formula: Base 40 + (most relevant skill × 5) + (Looks-50)/10 if social. Clamp 5-95.
+- Cash floor: -50000. Never raise Heat for non-criminal actions.
+- If player gets or loses a job, set "job" accordingly.
+- For relationships, use "label_change" only if the relationship status genuinely changes (e.g. Girlfriend → Wife after marriage, or Boss → null if fired).
+
+JSON schema:
 {
-  "success_rate": <0-100 integer>,
-  "succeeded": <true or false>,
-  "event_title": <short 2-4 word title>,
-  "narrative": <2-4 sentences of vivid gritty outcome>,
+  "success_rate": <int 5-95>,
+  "succeeded": <bool>,
+  "event_title": "<2-4 words>",
+  "narrative": "<2-4 sentences, cinematic and specific>",
   "stat_changes": {
-    "cash": <integer>,
-    "health": <integer>,
-    "sanity": <integer>,
-    "heat": <integer>,
-    "rep": <integer>,
-    "skills": { "<skill_name>": <integer> },
-    "relationships": { "<npc_name>": <integer> },
+    "cash": <int>,
+    "health": <int>,
+    "sanity": <int>,
+    "heat": <int, 0 or negative for legal actions>,
+    "rep": <int>,
+    "job": "<new job string, or omit if unchanged>",
+    "skills": { "<skill>": <int> },
+    "relationships": {
+      "<relationship key>": {
+        "label_change": "<new label or omit if unchanged>",
+        "value_delta": <int>
+      }
+    },
     "assets_add": [],
     "assets_remove": [],
     "syndicate_rank": <string or null>
   },
-  "next_prompt": <one sentence teaser>
+  "next_prompt": "<one sentence hook>"
 }
 
-Success formula: Base 40 + (Relevant Skill × 5) + (Looks-50)/10 if social. Max 95, min 5.
-Heat > 80 triggers police. Health < 20 triggers medical crisis. Cash floor -50000.`;
-
-  const userContent = `STATE:
+STATE:
 Name: ${s.name} | Age: ${s.age} | Location: ${s.location} | Turn: ${s.turn}
-Cash: $${s.cash} | Health: ${s.health} | Sanity: ${s.sanity} | Heat: ${s.heat}% | Rep: ${s.rep}
-Looks: ${s.looks} | Syndicate: ${s.syndicateRank}
+Cash: $${s.cash} | Health: ${s.health} | Sanity: ${s.sanity} | Heat: ${s.heat}% | Rep: ${s.rep} | Looks: ${s.looks}
+Job: ${s.job} | Syndicate: ${s.syndicateRank}
 Skills: ${JSON.stringify(s.skills)}
-Relationships: ${JSON.stringify(s.relationships)}
+Relationships: ${JSON.stringify(relsForPrompt)}
 Assets: ${s.assets.join(', ') || 'None'}
 
-ACTION: ${action}`;
+PLAYER ACTION: ${action}`;
 
   try {
-    const raw = await callGemini(systemPrompt, userContent);
+    const raw = await callGemini(prompt);
     const parsed = extractJSON(raw);
-    if (!parsed) throw new Error('Malformed AI response. Try again.');
+    if (!parsed) throw new Error('Malformed JSON response. Try again.');
     applyTurn(action, parsed);
   } catch(e) {
     hideTyping();
-    appendSystem(`[SYSTEM ERROR] ${e.message || 'Unknown error'}. Retry your action.`);
+    appendSystem(`[SYSTEM ERROR] ${e.message}. Retry your action.`);
   } finally {
     isProcessing = false;
-    document.getElementById('send-btn').disabled = false;
-    document.getElementById('action-input').disabled = false;
-    document.getElementById('age-advance-btn').disabled = false;
+    setAllInputs(false);
     document.getElementById('action-input').focus();
   }
-}
-
-function extractJSON(text) {
-  try {
-    const match = text.match(/\{[\s\S]*\}/);
-    return match ? JSON.parse(match[0]) : null;
-  } catch(e) { return null; }
 }
 
 function applyTurn(action, result) {
@@ -1064,27 +1105,44 @@ function applyTurn(action, result) {
   const s = gameState;
   s.turn++;
   const sc = result.stat_changes || {};
-  if (sc.cash) s.cash = Math.max(-50000, s.cash + sc.cash);
-  if (sc.health) s.health = Math.min(100, Math.max(0, s.health + sc.health));
-  if (sc.sanity) s.sanity = Math.min(100, Math.max(0, s.sanity + sc.sanity));
-  if (sc.heat) s.heat = Math.min(100, Math.max(0, s.heat + sc.heat));
-  if (sc.rep) s.rep = Math.min(100, Math.max(0, s.rep + sc.rep));
+  if (sc.cash)   s.cash   = Math.max(-50000, s.cash + sc.cash);
+  if (sc.health) s.health = clamp(s.health + sc.health, 0, 100);
+  if (sc.sanity) s.sanity = clamp(s.sanity + sc.sanity, 0, 100);
+  // CHANGE 4: enforce heat rule — only allow heat to rise if action seems criminal
+  // We trust the AI's sc.heat value here since the prompt now enforces it
+  if (sc.heat !== undefined && sc.heat !== 0) s.heat = clamp(s.heat + sc.heat, 0, 100);
+  if (sc.rep)    s.rep    = clamp(s.rep + sc.rep, 0, 100);
+  // CHANGE 2: apply job update from turn
+  if (sc.job) s.job = sc.job;
   if (sc.skills) Object.entries(sc.skills).forEach(([k,v]) => {
-    s.skills[k] = s.skills[k] !== undefined ? Math.min(50, Math.max(0, s.skills[k] + v)) : Math.max(0, v);
+    s.skills[k] = s.skills[k] !== undefined ? clamp(s.skills[k] + v, 0, 50) : Math.max(0, v);
   });
-  if (sc.relationships) Object.entries(sc.relationships).forEach(([k,v]) => {
-    if (s.relationships[k] !== undefined) s.relationships[k] = Math.min(100, Math.max(0, s.relationships[k] + v));
-  });
-  if (sc.assets_add) sc.assets_add.forEach(a => { if (!s.assets.includes(a)) s.assets.push(a); });
+  // CHANGE 3: apply dynamic relationship label + value changes from turn
+  if (sc.relationships) {
+    Object.entries(sc.relationships).forEach(([key, change]) => {
+      // Try matching by key or by current label
+      let relKey = key;
+      if (!s.relationships[relKey]) {
+        relKey = Object.keys(s.relationships).find(k => s.relationships[k].label.toLowerCase() === key.toLowerCase());
+      }
+      if (relKey && s.relationships[relKey]) {
+        if (change.label_change) s.relationships[relKey].label = change.label_change;
+        if (change.value_delta !== undefined) {
+          s.relationships[relKey].value = clamp(s.relationships[relKey].value + change.value_delta, 0, 100);
+        }
+      }
+    });
+  }
+  if (sc.assets_add)    sc.assets_add.forEach(a => { if (!s.assets.includes(a)) s.assets.push(a); });
   if (sc.assets_remove) sc.assets_remove.forEach(a => { s.assets = s.assets.filter(x => x !== a); });
   if (sc.syndicate_rank) s.syndicateRank = sc.syndicate_rank;
 
   const displayChanges = {};
-  if (sc.cash) displayChanges['CASH'] = sc.cash;
+  if (sc.cash)   displayChanges['CASH']   = sc.cash;
   if (sc.health) displayChanges['HEALTH'] = sc.health;
   if (sc.sanity) displayChanges['SANITY'] = sc.sanity;
-  if (sc.heat) displayChanges['HEAT'] = sc.heat;
-  if (sc.rep) displayChanges['REP'] = sc.rep;
+  if (sc.heat)   displayChanges['HEAT']   = sc.heat;
+  if (sc.rep)    displayChanges['REP']    = sc.rep;
 
   appendAIMessage(
     result.event_title || 'EVENT',
@@ -1097,11 +1155,19 @@ function applyTurn(action, result) {
   checkGameOver();
 }
 
+// ── HELPERS ──
+function clamp(val, min, max) { return Math.min(max, Math.max(min, val)); }
+function setAllInputs(disabled) {
+  document.getElementById('send-btn').disabled = disabled;
+  document.getElementById('action-input').disabled = disabled;
+  document.getElementById('age-advance-btn').disabled = disabled;
+}
+
 // ── GAME OVER ──
 function checkGameOver() {
   const s = gameState;
   let reason = null;
-  if (s.health <= 0) reason = 'HEALTH DEPLETED';
+  if (s.health <= 0)      reason = 'HEALTH DEPLETED';
   else if (s.heat >= 100) reason = 'MAXIMUM HEAT — ARRESTED';
   else if (s.sanity <= 0) reason = 'SANITY SHATTERED';
   else if (s.cash <= -50000) reason = 'BANKRUPT — DEBT CONSUMED YOU';
@@ -1116,7 +1182,7 @@ function triggerGameOver(reason) {
     ['REP', s.rep], ['HEALTH', s.health], ['RANK', s.syndicateRank], ['ASSETS', s.assets.length]
   ].map(([k,v]) => `<div class="stat-box"><div class="stat-box-label">${k}</div><div class="stat-box-value">${v}</div></div>`).join('');
   document.getElementById('modal-overlay').classList.remove('hidden');
-  ['gameover-screen'].forEach(id => document.getElementById(id).classList.remove('hidden'));
+  document.getElementById('gameover-screen').classList.remove('hidden');
   ['api-screen','setup-screen','saves-screen'].forEach(id => document.getElementById(id).classList.add('hidden'));
 }
 function restartGame() {
